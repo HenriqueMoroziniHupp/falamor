@@ -62,6 +62,10 @@ A voz toca no mesmo `AudioContext`, então pausar congela fotos, legendas, voz e
 
 **Proteção da prévia.** Marca d'água animada "prévia" e um selo que muda de lugar. Também bloqueia Ctrl/Cmd+P e Ctrl/Cmd+S, deixa a tela preta no PrintScreen, impede clique direito e "salvar imagem", e pausa com véu quando a aba perde o foco. **Limite:** nenhum site consegue bloquear o gravador de tela do sistema (iOS/Android/OBS) nem uma câmera apontada para a tela; por isso a marca d'água é a proteção principal. A página publicada não tem marca d'água.
 
+## Renderização
+
+Só a landing (`/` e `/en`) é gerada no servidor: ela é pré-renderizada no build, por SEO. Todo o resto é montado no navegador. A página pública `/d/[id]` também, mas o servidor injeta nela as tags OG (preview do WhatsApp) e o status 404/410 por meio de `server/plugins/og-meta.ts`. Detalhes em [docs/decisoes/0011](docs/decisoes/0011-renderizacao-landing-ssr-resto-spa.md).
+
 ## Estrutura
 
 ```

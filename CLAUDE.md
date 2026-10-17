@@ -35,6 +35,9 @@ Test routes: `/criar` (wizard), `/d/demo`, `/en/d/demo-en`, `/d/demo-expirada` (
 
 ## Architecture
 
+### Rendering (ADR 0011)
+Only the landing (`/`, `/en`) is server-generated, prerendered at build time for SEO. Everything else is `ssr: false` via `routeRules['/**']` in `nuxt.config.ts`, so new pages are client-rendered by default. Landing copy changes need a rebuild.
+
 ### Code layout and auto-imports
 - `app/`: Nuxt 4 srcDir. Components are registered **by filename without a folder prefix** (`pathPrefix: false`), so `components/player/DeclarationPlayer.vue` is `<DeclarationPlayer>`. Component filenames must stay globally unique.
 - `app/utils/*` (e.g. `idb`, `compressImage`) and `app/composables/*` are auto-imported. `app/lib/*` is **not** auto-imported: import it from `~/lib/...`. It holds pure logic (`timeline.ts`, `player.ts`) and the `RomanticAudioEngine` class.
@@ -61,13 +64,13 @@ Pre-generating sample audio depends on sample texts **having no names**. Portugu
 - `DeclarationPlayer` is shared by the wizard preview (`mode: 'preview'`) and the public page `/d/[id]` (`mode: 'public'`). Preview mode adds `PreviewWatermark` and the strict `useCaptureGuard` (blocks print/save shortcuts, blanks the screen on PrintScreen, veils and pauses on blur). OS screen recorders can't be blocked, so the watermark is the real protection. The public page has no watermark.
 
 ### Draft / wizard
-`useDraft` is a `createSharedComposable` singleton holding a reactive `DraftState`. It autosaves to IndexedDB (`draft:v1`, debounced). Photo blobs are compressed in the browser and stored separately as `photo:<id>`; the draft state only keeps the IDs. Because the wizard depends on IndexedDB, `/criar` renders it inside `<ClientOnly>`. Step validation lives in `CreateWizard.vue` (`blocker`).
+`useDraft` is a `createSharedComposable` singleton holding a reactive `DraftState`. It autosaves to IndexedDB (`draft:v1`, debounced). Photo blobs are compressed in the browser and stored separately as `photo:<id>`; the draft state only keeps the IDs. Because the wizard depends on IndexedDB, `/criar` is client-only (it also wraps the wizard in `<ClientOnly>`). Step validation lives in `CreateWizard.vue` (`blocker`).
 
 ### Public declarations and post-pilot swap points
 - `GET /api/declarations/[id]` reads through `useDeclarationRepository()` (`server/utils/declarations.ts`). This is the single place to swap the mock `DeclarationRepository` for a real one (D1/Postgres). It returns 404 for unknown declarations and 410 for expired ones.
 - `nitro.storage.tts` is meant to become an R2/S3 unstorage driver without changing the code that calls `useStorage('tts')`.
 - The rate limiter is in-memory, so it must move to KV/D1 before running multiple workers.
-- `/d/**` routes send `X-Robots-Tag: noindex` and render OG meta for WhatsApp previews. `NUXT_PUBLIC_SITE_URL` must be absolute and public (for example a cloudflared tunnel) to test those previews.
+- `/d/**` routes send `X-Robots-Tag: noindex`. The page is client-rendered, so OG meta for WhatsApp previews and the 404/410 status are injected into the HTML shell by `server/plugins/og-meta.ts` (a `render:html` hook, no Vue SSR). Don't rely on `useSeoMeta` in client-only pages for anything crawlers must read. `NUXT_PUBLIC_SITE_URL` must be absolute and public (for example a cloudflared tunnel) to test those previews.
 
 ### i18n
 `@nuxtjs/i18n` with `prefix_except_default`: pt-BR is the default (no prefix) and English lives under `/en`. All UI copy goes in `i18n/locales/{pt-BR,en}.json`. Adding a locale means updating `SUPPORTED_LOCALES` in `shared/types/declaration.ts`, adding sample texts in `shared/samples.ts`, adding a speech language and style in `voiceStyle.ts`, adding a locale JSON file, and rerunning `samples:generate`.

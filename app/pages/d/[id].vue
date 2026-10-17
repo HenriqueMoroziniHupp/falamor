@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { PlayerDeclaration } from '~/lib/player'
 
+// Montada no navegador (ADR 0011). As tags OG e o status 404/410 vêm do servidor,
+// injetados no HTML por server/plugins/og-meta.ts.
 definePageMeta({ layout: false })
 
 const route = useRoute()
@@ -17,9 +19,6 @@ const expired = computed(() => error.value?.statusCode === 410)
 if (error.value && !expired.value) {
   throw createError({ statusCode: error.value.statusCode ?? 404, statusMessage: 'Not found', fatal: true })
 }
-if (expired.value && import.meta.server) setResponseStatus(410)
-
-const absoluteUrl = (path: string) => new URL(path, config.public.siteUrl).toString()
 
 const player = computed<PlayerDeclaration | null>(() => {
   const d = declaration.value
@@ -35,27 +34,9 @@ const player = computed<PlayerDeclaration | null>(() => {
   }
 })
 
-// O preview do WhatsApp/Telegram/iMessage lê estas tags no HTML do servidor.
-const ogTitle = computed(() => (declaration.value ? t('og.title', { name: declaration.value.partnerName }) : t('expired.title')))
-const ogDescription = computed(() =>
-  declaration.value ? t('og.description', { name: declaration.value.authorName }) : t('expired.text', { days: config.public.declarationTtlDays }),
-)
-
-useSeoMeta({
-  title: ogTitle,
-  description: ogDescription,
-  ogTitle,
-  ogDescription,
-  ogType: 'website',
-  ogSiteName: 'Falamor',
-  ogUrl: absoluteUrl(route.fullPath),
-  ogImage: declaration.value ? absoluteUrl(declaration.value.coverUrl) : undefined,
-  ogImageWidth: declaration.value ? 1200 : undefined,
-  ogImageHeight: declaration.value ? 630 : undefined,
-  ogImageType: declaration.value ? 'image/jpeg' : undefined,
-  ogImageAlt: ogTitle,
-  twitterCard: 'summary_large_image',
-  robots: 'noindex, nofollow',
+useHead({
+  title: () => (declaration.value ? t('og.title', { name: declaration.value.partnerName }) : t('expired.title')),
+  meta: [{ name: 'robots', content: 'noindex, nofollow' }],
 })
 </script>
 

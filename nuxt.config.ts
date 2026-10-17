@@ -39,7 +39,12 @@ export default defineNuxtConfig({
     },
   },
 
+  // Renderização (ADR 0011): só a landing é gerada no servidor, pré-renderizada no build, por SEO.
+  // Todo o resto é montado no navegador. As tags OG de /d/** são injetadas por server/plugins/og-meta.ts.
   routeRules: {
+    '/**': { ssr: false },
+    '/': { ssr: true, prerender: true },
+    '/en': { ssr: true, prerender: true },
     '/d/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
     '/en/d/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
   },
