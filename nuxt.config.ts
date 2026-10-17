@@ -43,6 +43,8 @@ export default defineNuxtConfig({
     '/**': { ssr: false },
     '/': { ssr: true, prerender: true },
     '/en': { ssr: true, prerender: true },
+    // Resumo para assistentes de IA (server/routes/llms.txt.ts), gerado no build como a landing.
+    '/llms.txt': { prerender: true },
     '/d/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
     '/en/d/**': { headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
   },

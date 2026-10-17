@@ -11,7 +11,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Nunito:wght@600&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Nunito:wght@600;800&display=block" rel="stylesheet">
 <style>
   html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
   body {
@@ -26,15 +26,24 @@
     position: relative;
     display: inline-flex; align-items: flex-start; gap: 6px;
     font-family: 'Bodoni Moda', serif; font-style: italic; font-weight: 500;
-    font-size: 188px; line-height: 1; letter-spacing: -0.01em;
+    font-size: 164px; line-height: 1; letter-spacing: -0.01em;
     color: #9E2447;
   }
   .wordmark svg { width: 56px; height: 56px; fill: #C8385E; margin-top: 18px; }
   .tagline {
-    margin-top: 34px;
+    margin-top: 28px;
     font-size: 40px; font-weight: 600; color: #7A5866; letter-spacing: 0.005em;
   }
-  .rule { width: 72px; height: 3px; border-radius: 3px; background: #EEB4C4; margin-top: 30px; }
+  .rule { width: 72px; height: 3px; border-radius: 3px; background: #EEB4C4; margin-top: 26px; }
+  /* Chamada para ação: mesmo texto e cor do botão principal da landing */
+  .cta {
+    margin-top: 40px; padding: 22px 46px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 14px;
+    background: #C8385E; color: #fff;
+    font-size: 32px; font-weight: 800; letter-spacing: 0.01em;
+    box-shadow: 0 14px 34px -12px rgba(158, 36, 71, .55);
+  }
+  .cta svg { width: 30px; height: 30px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 </style>
 </head>
 <body>
@@ -52,10 +61,12 @@
   <div class="wordmark">falamor<svg viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg></div>
   <div class="rule"></div>
   <div class="tagline" id="tagline">Declare seu amor em voz alta</div>
+  <div class="cta"><span id="cta">Criar minha declaração</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
   <script>
     if (new URLSearchParams(location.search).get('lang') === 'en') {
       document.documentElement.lang = 'en'
       document.getElementById('tagline').textContent = 'Say I love you out loud'
+      document.getElementById('cta').textContent = 'Create my declaration'
     }
   </script>
 </body>
