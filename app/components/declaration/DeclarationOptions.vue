@@ -4,7 +4,7 @@ import type { AppLocale, VoiceGender } from '#shared/types/declaration'
 
 /** 'custom' = escrever a própria declaração. */
 const selected = defineModel<SampleId | 'custom'>({ required: true })
-const props = defineProps<{ locale: AppLocale; voice: VoiceGender }>()
+const props = defineProps<{ locale: AppLocale; voice: VoiceGender; allowCustom: boolean }>()
 const emit = defineEmits<{ customize: [id: SampleId] }>()
 
 const { t } = useI18n()
@@ -27,7 +27,7 @@ const options = computed(() =>
       <span class="option-title">{{ option.title }}</span>
       <span class="option-text" :class="{ 'option-text-full': selected === option.id }">{{ option.text }}</span>
       <button
-        v-if="selected === option.id"
+        v-if="allowCustom && selected === option.id"
         type="button"
         class="option-edit"
         @click.prevent="emit('customize', option.id)"
@@ -36,7 +36,7 @@ const options = computed(() =>
       </button>
     </label>
 
-    <label class="option option-custom" :class="{ 'option-selected': selected === 'custom' }">
+    <label v-if="allowCustom" class="option option-custom" :class="{ 'option-selected': selected === 'custom' }">
       <input v-model="selected" type="radio" name="declaration" value="custom" class="sr-only" />
       <span class="option-title">{{ t('declaration.writeOwn') }}</span>
       <span class="option-hint">{{ t('declaration.writeOwnHint') }}</span>

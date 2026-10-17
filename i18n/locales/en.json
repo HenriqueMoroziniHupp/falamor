@@ -71,6 +71,7 @@
   "declaration": {
     "title": "What do you want to say?",
     "subtitle": "Pick one of our declarations or write it in your own words.",
+    "subtitleSamples": "Pick the declaration that fits you two best.",
     "optionsLabel": "Declaration",
     "editSample": "Edit this text",
     "writeOwn": "Write my own",

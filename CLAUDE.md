@@ -29,6 +29,8 @@ npm run samples:generate -- --audition    # voice comparison clips into .data/au
 
 `samples:generate` runs the TS script directly with Node's type stripping (`node --env-file=.env scripts/...ts`). That's why `shared/` and `server/services/tts/` import each other with explicit `.ts` extensions and `allowImportingTsExtensions` is enabled. Keep those modules free of Nuxt auto-imports and aliases so the script can still load them.
 
+Custom text and voice generation are behind `runtimeConfig.public.customText`, which is **off by default** (ADR 0016). With it off, the wizard only offers samples, the preview uses only `public/audio/samples`, and `/api/tts` returns 403. Set `NUXT_PUBLIC_CUSTOM_TEXT=true` to work on the custom-text flow.
+
 Without `NUXT_GEMINI_API_KEY` the app still works: `/api/tts` returns 503 on a cache miss, and the preview falls back to music and captions only.
 
 Test routes: `/criar` (wizard), `/d/demo`, `/en/d/demo-en`, `/d/demo-expirada` (410).

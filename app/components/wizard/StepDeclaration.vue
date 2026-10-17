@@ -8,7 +8,7 @@ const customText = defineModel<string>('customText', { required: true })
 const voice = defineModel<VoiceGender>('voice', { required: true })
 const music = defineModel<MusicStyle>('music', { required: true })
 
-defineProps<{ minChars: number; maxChars: number }>()
+defineProps<{ minChars: number; maxChars: number; allowCustom: boolean }>()
 
 const { t, locale } = useI18n()
 const currentLocale = computed(() => locale.value as AppLocale)
@@ -34,11 +34,14 @@ function customize(id: SampleId) {
 
 <template>
   <div class="step">
-    <StepHeading :title="t('declaration.title')" :subtitle="t('declaration.subtitle')" />
+    <StepHeading
+      :title="t('declaration.title')"
+      :subtitle="allowCustom ? t('declaration.subtitle') : t('declaration.subtitleSamples')"
+    />
 
-    <DeclarationOptions v-model="choice" :locale="currentLocale" :voice="voice" @customize="customize" />
+    <DeclarationOptions v-model="choice" :locale="currentLocale" :voice="voice" :allow-custom="allowCustom" @customize="customize" />
 
-    <DeclarationEditor v-if="textMode === 'custom'" v-model="customText" :min="minChars" :max="maxChars" />
+    <DeclarationEditor v-if="allowCustom && textMode === 'custom'" v-model="customText" :min="minChars" :max="maxChars" />
 
     <VoiceToggle v-model="voice" />
 

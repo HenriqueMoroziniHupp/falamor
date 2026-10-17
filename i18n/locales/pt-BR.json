@@ -71,6 +71,7 @@
   "declaration": {
     "title": "O que você quer dizer?",
     "subtitle": "Escolha uma das nossas declarações ou escreva com as suas palavras.",
+    "subtitleSamples": "Escolha a declaração que mais combina com vocês.",
     "optionsLabel": "Declaração",
     "editSample": "Editar este texto",
     "writeOwn": "Escrever a minha",

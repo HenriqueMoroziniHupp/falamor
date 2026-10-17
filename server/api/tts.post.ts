@@ -20,6 +20,8 @@ function getProvider(apiKey: string, model: string): TtsProvider {
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
+  // Deploy de demonstração: só exemplos com áudio pronto em public/, nenhuma geração.
+  if (!config.public.customText) throw createError({ statusCode: 403, statusMessage: 'custom_text_disabled' })
   const body = await readBody<{ text?: unknown; voice?: unknown; locale?: unknown }>(event)
 
   if (typeof body?.text !== 'string') throw createError({ statusCode: 400, statusMessage: 'invalid_text' })

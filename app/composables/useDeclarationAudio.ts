@@ -30,11 +30,13 @@ function errorKey(error: unknown): string {
  * 1. texto de exemplo → asset estático pré-gerado;
  * 2. já gerado antes neste navegador → IndexedDB;
  * 3. senão → POST /api/tts (que ainda tem o próprio cache no servidor).
+ * Com `public.customText` desligado, só o passo 1: nada é gerado.
  */
 export function useDeclarationAudio() {
   const status = shallowRef<'idle' | 'loading' | 'ready' | 'error'>('idle')
   const error = shallowRef<string | null>(null)
   const audioKey = shallowRef<string | null>(null)
+  const canGenerate = Boolean(useRuntimeConfig().public.customText)
   let objectUrl: string | null = null
 
   function releaseUrl() {
@@ -56,6 +58,12 @@ export function useDeclarationAudio() {
           status.value = 'ready'
           return { url, source: 'sample' }
         }
+      }
+
+      if (!canGenerate) {
+        error.value = 'preview.errors.notConfigured'
+        status.value = 'error'
+        return null
       }
 
       const key = await sha256Hex(JSON.stringify(['v1', locale, voice, normalizeDeclarationText(text)]))

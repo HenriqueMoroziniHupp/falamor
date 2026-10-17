@@ -36,6 +36,10 @@ export default defineNuxtConfig({
       declarationTtlDays: 7,
       maxPhotos: 10,
       maxDeclarationChars: 1000,
+      // Texto próprio + geração de voz pelo Gemini. Desligado no deploy de demonstração:
+      // só as declarações de exemplo, com os áudios já gerados em public/ (custo zero).
+      // Para ligar: NUXT_PUBLIC_CUSTOM_TEXT=true.
+      customText: false,
     },
   },
 

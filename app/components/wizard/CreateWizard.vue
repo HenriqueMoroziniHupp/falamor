@@ -7,11 +7,21 @@ const { t, locale } = useI18n()
 const config = useRuntimeConfig()
 const maxPhotos = Number(config.public.maxPhotos)
 const maxChars = Number(config.public.maxDeclarationChars)
+const allowCustom = Boolean(config.public.customText)
 
 const draft = useDraft()
 const { state, photos, ready, processing } = draft
 
 const photoNotice = shallowRef<string | null>(null)
+
+// Sem texto próprio, um rascunho antigo em modo 'custom' volta para o exemplo escolhido.
+watch(
+  ready,
+  (isReady) => {
+    if (isReady && !allowCustom && state.textMode === 'custom') state.textMode = 'sample'
+  },
+  { immediate: true },
+)
 
 const labels = computed(() => [t('wizard.steps.names'), t('wizard.steps.photos'), t('wizard.steps.declaration'), t('wizard.steps.preview')])
 const step = computed(() => Math.min(state.step, labels.value.length - 1))
@@ -87,6 +97,7 @@ async function onRestart() {
           v-model:music="state.music"
           :min-chars="MIN_CHARS"
           :max-chars="maxChars"
+          :allow-custom="allowCustom"
         />
         <StepPreview
           v-else
