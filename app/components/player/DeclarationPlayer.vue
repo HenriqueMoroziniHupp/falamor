@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onKeyStroke } from '@vueuse/core'
 import { TITLE_DURATION, activeCaptionIndex, clamp01, visibleSlides } from '~/lib/timeline'
-import { kenBurnsOrigin, type PlayerDeclaration, type PlayerMode, type SlideLayer } from '~/lib/player'
+import { COVER_OPEN_MS, FULLSCREEN_SETTLE_MS, PAPER_SOUND_AT, PAPER_SOUND_URL, kenBurnsOrigin, type PlayerDeclaration, type PlayerMode, type SlideLayer } from '~/lib/player'
 
 const props = defineProps<{ declaration: PlayerDeclaration; mode: PlayerMode }>()
 const emit = defineEmits<{ close: [] }>()
 
 const { t } = useI18n()
+const root = useTemplateRef<HTMLElement>('root')
 
 /** cover → envelope fechado; opening → animação de abrir; show → apresentação. */
 const phase = shallowRef<'cover' | 'opening' | 'show'>('cover')
@@ -52,12 +53,30 @@ const isRunning = computed(() => status.value === 'playing' || status.value === 
 const showTitle = computed(() => phase.value !== 'cover' && isRunning.value && elapsed.value < TITLE_DURATION)
 const showPaused = computed(() => veiled.value || (phase.value === 'show' && status.value === 'paused'))
 
-onMounted(() => void playback.prepare())
+/** Onde dá para entrar em tela cheia, a animação espera a troca de modo assentar. */
+const openDelay = canFullscreen() ? FULLSCREEN_SETTLE_MS : 0
+
+onMounted(() => {
+  void playback.prepare()
+  void playback.preloadSound(PAPER_SOUND_URL)
+})
 
 async function onOpen() {
+  // Ainda dentro do toque no lacre: tela cheia antes de qualquer await.
+  enterFullscreen(root.value)
   phase.value = 'opening'
-  await playback.start()
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const settle = openDelay / 1000
+  await playback.start(settle + (reduced ? 0.15 : COVER_OPEN_MS / 1000))
+  if (!reduced) void playback.playSound(PAPER_SOUND_URL, settle + PAPER_SOUND_AT)
 }
+
+function close() {
+  exitFullscreen(root.value)
+  emit('close')
+}
+
+onBeforeUnmount(() => exitFullscreen(root.value))
 
 function onStageTap() {
   if (status.value === 'playing') void playback.pause()
@@ -70,7 +89,7 @@ function onResume() {
 }
 
 onKeyStroke('Escape', () => {
-  if (props.mode === 'preview') emit('close')
+  if (props.mode === 'preview') close()
 })
 onKeyStroke(' ', (e) => {
   if (phase.value !== 'show') return
@@ -81,6 +100,7 @@ onKeyStroke(' ', (e) => {
 
 <template>
   <div
+    ref="root"
     class="player"
     :class="{ 'player-preview': mode === 'preview' }"
     role="region"
@@ -104,7 +124,7 @@ onKeyStroke(' ', (e) => {
       :muted="muted"
       :closable="mode === 'preview'"
       @toggle-mute="playback.toggleMute"
-      @close="emit('close')"
+      @close="close"
     />
 
     <Transition name="fade-slow">
@@ -115,7 +135,7 @@ onKeyStroke(' ', (e) => {
         :start-date="declaration.startDate"
         :mode="mode"
         @replay="playback.replay"
-        @close="emit('close')"
+        @close="close"
       />
     </Transition>
 
@@ -134,6 +154,7 @@ onKeyStroke(' ', (e) => {
       :author-name="declaration.authorName"
       :partner-name="declaration.partnerName"
       :ready="status !== 'preparing'"
+      :open-delay="openDelay"
       @open="onOpen"
       @opened="phase = 'show'"
     />

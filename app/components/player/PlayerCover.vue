@@ -1,11 +1,18 @@
 <script setup lang="ts">
-const props = defineProps<{ authorName: string; partnerName: string; ready: boolean }>()
+import { COVER_OPEN_MS } from '~/lib/player'
+
+const props = defineProps<{
+  authorName: string
+  partnerName: string
+  ready: boolean
+  /** Espera (ms) entre o toque e a animação, para a tela cheia assentar. */
+  openDelay?: number
+}>()
 const emit = defineEmits<{ open: []; opened: [] }>()
 
 const { t } = useI18n()
+const pressed = shallowRef(false)
 const opening = shallowRef(false)
-
-const OPEN_ANIMATION_MS = 1500
 
 /** Contorno irregular de lacre de cera (determinístico, igual no SSR e no cliente). */
 function waxPath(cx = 50, cy = 50, r = 44): string {
@@ -22,12 +29,14 @@ function waxPath(cx = 50, cy = 50, r = 44): string {
 const sealPath = waxPath()
 
 function open() {
-  if (!props.ready || opening.value) return
-  opening.value = true
+  if (!props.ready || pressed.value) return
+  pressed.value = true
   // O áudio começa já no toque (exigência de autoplay); a animação cobre a entrada da música.
   emit('open')
+  const delay = props.openDelay ?? 0
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  setTimeout(() => emit('opened'), reduced ? 0 : OPEN_ANIMATION_MS)
+  setTimeout(() => (opening.value = true), delay)
+  setTimeout(() => emit('opened'), delay + (reduced ? 0 : COVER_OPEN_MS))
 }
 </script>
 
@@ -94,7 +103,8 @@ function open() {
   /* app/spa-loading-template.html repete este gradiente: se mudar aqui, mudar lá. */
   background: radial-gradient(circle at 50% 28%, #fff 0%, var(--color-paper) 42%, var(--color-petal) 100%);
   color: var(--color-ink);
-  transition: opacity 0.5s ease 1s, transform 0.6s var(--ease-gentle) 1s;
+  /* A capa só some depois que a carta saiu inteira do envelope (COVER_OPEN_MS). */
+  transition: opacity 0.6s ease 2.2s, transform 0.7s var(--ease-gentle) 2.2s;
 }
 
 .cover.is-opening {
@@ -142,6 +152,7 @@ function open() {
 .envelope-back {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border-radius: 0.75rem;
   background: #f1bfcd;
   box-shadow: 0 30px 50px -28px rgb(158 36 71 / 0.55);
@@ -153,12 +164,14 @@ function open() {
   right: 7%;
   top: 6%;
   bottom: 8%;
+  /* À frente da aba aberta, atrás do bolso: sai de dentro do envelope. */
+  z-index: 1;
   display: grid;
   place-items: center;
   border-radius: 0.375rem;
   background: #fffdfd;
   box-shadow: 0 1px 3px rgb(59 30 42 / 0.12);
-  transition: transform 0.75s var(--ease-gentle) 0.55s;
+  transition: transform 1.1s var(--ease-gentle) 1.1s;
 }
 
 .letter-name {
@@ -167,12 +180,13 @@ function open() {
   font-size: 1.5rem;
   color: var(--color-rose-deep);
   opacity: 0;
-  transition: opacity 0.4s ease 0.9s;
+  transition: opacity 0.5s ease 1.6s;
 }
 
 .envelope-pocket {
   position: absolute;
   inset: 0;
+  z-index: 2;
   border-radius: 0.75rem;
   background: linear-gradient(170deg, #fbe0e7, #f5c9d5);
   clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%);
@@ -184,19 +198,20 @@ function open() {
   right: 0;
   top: 0;
   height: 62%;
-  z-index: 2;
+  z-index: 3;
   background: linear-gradient(180deg, #f7d3dc, #f0bccb);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   border-radius: 0.75rem 0.75rem 0 0;
   transform-origin: top;
-  transition: transform 0.6s var(--ease-gentle) 0.2s, z-index 0s linear 0.5s;
+  /* Desce para trás da carta na metade do giro, quando já está de pé. */
+  transition: transform 0.9s var(--ease-gentle) 0.3s, z-index 0s linear 0.75s;
 }
 
 .seal {
   position: absolute;
   left: 50%;
   top: 62%;
-  z-index: 3;
+  z-index: 4;
   width: 5.5rem;
   height: 5.5rem;
   translate: -50% -50%;
@@ -204,7 +219,7 @@ function open() {
   cursor: pointer;
   filter: drop-shadow(0 6px 8px rgb(116 19 49 / 0.35));
   animation: breathe 2.6s ease-in-out infinite;
-  transition: opacity 0.3s ease, scale 0.3s var(--ease-gentle);
+  transition: opacity 0.4s ease, scale 0.4s var(--ease-gentle);
 }
 
 .seal:disabled {
@@ -229,7 +244,7 @@ function open() {
 }
 
 .is-opening .letter {
-  transform: translateY(-42%);
+  transform: translateY(-45%);
 }
 
 .is-opening .letter-name {

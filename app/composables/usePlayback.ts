@@ -33,6 +33,7 @@ export function usePlayback(source: MaybeRefOrGetter<PlaybackSource>) {
   let startAt = 0
   let frame = 0
   let outroTimer: ReturnType<typeof setTimeout> | null = null
+  const sounds = new Map<string, Promise<AudioBuffer | null>>()
 
   async function prepare() {
     status.value = 'preparing'
@@ -82,8 +83,11 @@ export function usePlayback(source: MaybeRefOrGetter<PlaybackSource>) {
     frame = requestAnimationFrame(tick)
   }
 
-  /** Precisa vir de um toque/clique (política de autoplay dos navegadores). */
-  async function start() {
+  /**
+   * Precisa vir de um toque/clique (política de autoplay dos navegadores).
+   * A trilha começa já; voz, fotos e legendas esperam `delay` segundos (a abertura do envelope).
+   */
+  async function start(delay = 0.15) {
     if (!engine || !timeline.value) return
     await engine.resume()
     const ctx = engine.ctx!
@@ -91,7 +95,7 @@ export function usePlayback(source: MaybeRefOrGetter<PlaybackSource>) {
 
     stopVoice()
     if (outroTimer) clearTimeout(outroTimer)
-    startAt = ctx.currentTime + 0.15
+    startAt = ctx.currentTime + delay
     elapsed.value = 0
 
     engine.play(toValue(source).music)
@@ -128,6 +132,40 @@ export function usePlayback(source: MaybeRefOrGetter<PlaybackSource>) {
     await start()
   }
 
+  /** Baixa e decodifica um efeito curto antes do toque, para tocar sem atraso. */
+  function preloadSound(url: string): Promise<AudioBuffer | null> {
+    let buffer = sounds.get(url)
+    if (!buffer) {
+      engine ??= new RomanticAudioEngine()
+      const ctx = engine.ensureContext()
+      buffer = fetch(url)
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`)
+          return response.arrayBuffer()
+        })
+        .then((data) => ctx.decodeAudioData(data))
+        .catch((error) => {
+          console.warn('[player] sound effect unavailable', url, error)
+          return null
+        })
+      sounds.set(url, buffer)
+    }
+    return buffer
+  }
+
+  /** Efeito no mesmo AudioContext, `delay` segundos a partir de agora (respeita o mudo, sem ducking). */
+  async function playSound(url: string, delay = 0) {
+    const ctx = engine?.ctx
+    if (!ctx) return
+    const at = ctx.currentTime + delay
+    const buffer = await preloadSound(url)
+    if (!buffer || !engine?.ctx) return
+    const node = ctx.createBufferSource()
+    node.buffer = buffer
+    node.connect(engine.voiceOutput)
+    node.start(Math.max(at, ctx.currentTime))
+  }
+
   function toggleMute() {
     muted.value = !muted.value
     engine?.setMuted(muted.value)
@@ -141,5 +179,5 @@ export function usePlayback(source: MaybeRefOrGetter<PlaybackSource>) {
     engine = null
   })
 
-  return { status, elapsed, timeline, muted, hasVoice, prepare, start, pause, resume, replay, toggleMute }
+  return { status, elapsed, timeline, muted, hasVoice, prepare, start, pause, resume, replay, toggleMute, preloadSound, playSound }
 }

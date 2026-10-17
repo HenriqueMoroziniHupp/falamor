@@ -16,6 +16,8 @@ Registro curto de decisões que alguém (você no futuro, ou outra IA) poderia q
 | [0010](0010-expiracao-7-dias.md) | Expiração em 7 dias (lifecycle R2 + tarefa) | proposta |
 | [0011](0011-renderizacao-landing-ssr-resto-spa.md) | Só a landing no servidor; o resto no navegador (OG injetado) | aceita |
 | [0012](0012-tela-de-carregamento.md) | Tela de carregamento estática nas páginas montadas no navegador | aceita |
+| [0013](0013-nome-falado-na-demo.md) | Nome falado no áudio da demonstração | aceita |
+| [0014](0014-abertura-imersiva.md) | Abertura imersiva: tela cheia, som de papel e envelope mais lento | aceita |
 
 ## Modelo
 
