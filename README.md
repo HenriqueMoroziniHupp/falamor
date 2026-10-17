@@ -4,6 +4,18 @@ Gerador de declarações de amor no estilo "Recordações" do Google Fotos: foto
 
 O piloto roda **local**: sem banco, sem bucket, sem login, sem pagamento. O rascunho, as fotos e os áudios gerados ficam no IndexedDB do navegador. A chave do Gemini fica só no servidor do Nuxt (Nitro).
 
+<p align="center">
+  <img src="docs/imagens/landing-desktop.jpg" alt="Landing do Falamor no computador" width="900">
+</p>
+
+| Landing | Fotos | Declaração |
+| :---: | :---: | :---: |
+| <img src="docs/imagens/01-landing.jpg" alt="Landing no celular" width="240"> | <img src="docs/imagens/02-fotos.jpg" alt="Passo de escolher as fotos" width="240"> | <img src="docs/imagens/03-declaracao.jpg" alt="Passo de escolher a declaração" width="240"> |
+| **Envelope** | **Abertura** | **Legendas** |
+| <img src="docs/imagens/04-envelope.jpg" alt="Envelope com lacre de cera" width="240"> | <img src="docs/imagens/05-abertura.jpg" alt="Abertura do player com os nomes e o contador" width="240"> | <img src="docs/imagens/06-legenda.jpg" alt="Foto com a legenda da declaração" width="240"> |
+
+<sub>Prints do <code>/criar</code> e do <code>/d/demo</code> no celular (390×844). Fotos do Unsplash, ver <a href="public/demo/CREDITS.md">créditos</a>.</sub>
+
 Prompt original: [falamor-init-prompt.md](falamor-init-prompt.md) · Próximos passos: [ROADMAP.md](ROADMAP.md) · Produto, marca, decisões e experimentos: [docs/](docs/README.md).
 
 ## Rodando
