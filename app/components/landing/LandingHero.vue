@@ -1,6 +1,10 @@
 <script setup lang="ts">
-const { t } = useI18n()
+import { DEMOS } from '#shared/demo'
+import type { AppLocale } from '#shared/types/declaration'
+
+const { t, locale } = useI18n()
 const localePath = useLocalePath()
+const demoPath = computed(() => localePath(`/d/${DEMOS[locale.value as AppLocale].id}`))
 </script>
 
 <template>
@@ -10,7 +14,7 @@ const localePath = useLocalePath()
       <p class="hero-lead">{{ t('landing.lead') }}</p>
       <div class="hero-actions">
         <UiButton :to="localePath('/criar')">{{ t('landing.cta') }}</UiButton>
-        <UiButton variant="ghost" :to="localePath('/d/demo')">{{ t('landing.example') }}</UiButton>
+        <UiButton variant="ghost" :to="demoPath">{{ t('landing.example') }}</UiButton>
       </div>
     </div>
     <div class="hero-visual">

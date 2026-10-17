@@ -1,6 +1,6 @@
 import type { PublicDeclaration } from '#shared/types/declaration'
-import { sampleAudioPath, sampleText } from '#shared/samples'
-import { DEMO_AUDIO_PATH, DEMO_PARTNER_NAME, demoText } from '#shared/demo'
+import { sampleText } from '#shared/samples'
+import { DEMOS, demoAudioPath, demoText, type Demo } from '#shared/demo'
 
 /**
  * Contrato de persistência das declarações publicadas.
@@ -23,40 +23,33 @@ function withDates<T extends object>(data: T, createdAgoDays: number, ttlDays: n
   }
 }
 
+/** Demonstrações do "Ver um exemplo": nome falado no áudio (ver shared/demo.ts). */
+function fromDemo(demo: Demo) {
+  const { id, locale, authorName, partnerName, voice } = demo
+  return { id, locale, authorName, partnerName, voice, text: demoText(demo), audioUrl: demoAudioPath(demo) }
+}
+
 /** Declarações fixas para testar a página pública e o OG sem banco. */
 export function createMockDeclarationRepository({ ttlDays }: { ttlDays: number }): DeclarationRepository {
   const build = (): PublicDeclaration[] => [
     withDates(
       {
-        id: 'demo',
-        locale: 'pt-BR' as const,
-        authorName: 'Rafael',
-        partnerName: DEMO_PARTNER_NAME,
+        ...fromDemo(DEMOS['pt-BR']),
         startDate: '2022-02-14',
-        voice: 'male' as const,
         music: 'piano_warm' as const,
-        // Única com o nome falado no áudio (ver shared/demo.ts).
-        text: demoText(),
         photoUrls: DEMO_PHOTOS,
         coverUrl: '/demo/cover.jpg',
-        audioUrl: DEMO_AUDIO_PATH,
       },
       1,
       ttlDays,
     ),
     withDates(
       {
-        id: 'demo-en',
-        locale: 'en' as const,
-        authorName: 'Olivia',
-        partnerName: 'Noah',
+        ...fromDemo(DEMOS.en),
         startDate: '2021-06-05',
-        voice: 'female' as const,
         music: 'starlight_box' as const,
-        text: sampleText('primavera', 'en', 'female'),
         photoUrls: [...DEMO_PHOTOS].reverse(),
         coverUrl: '/demo/cover.jpg',
-        audioUrl: sampleAudioPath('primavera', 'en', 'female'),
       },
       1,
       ttlDays,
@@ -66,7 +59,7 @@ export function createMockDeclarationRepository({ ttlDays }: { ttlDays: number }
         id: 'demo-expirada',
         locale: 'pt-BR' as const,
         authorName: 'Rafael',
-        partnerName: DEMO_PARTNER_NAME,
+        partnerName: DEMOS['pt-BR'].partnerName,
         startDate: null,
         voice: 'male' as const,
         music: 'cinema_strings' as const,

@@ -1,7 +1,7 @@
 /**
  * Gera os áudios das declarações de exemplo (uma vez só) em public/audio/samples.
  * Assim os exemplos nunca gastam crédito de API em produção.
- * Também gera o áudio da demonstração (/d/demo), o único com nome falado.
+ * Também gera os áudios das demonstrações (/d/demo, /en/d/demo-en), os únicos com nome falado.
  *
  *   npm run samples:generate              # gera só o que falta
  *   npm run samples:generate -- --force   # regera tudo
@@ -11,7 +11,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { DECLARATION_SAMPLES, sampleAudioPath, sampleText } from '../shared/samples.ts'
-import { DEMO_AUDIO_PATH, demoText } from '../shared/demo.ts'
+import { DEMOS, demoAudioPath, demoText } from '../shared/demo.ts'
 import { SUPPORTED_LOCALES, VOICE_GENDERS, type AppLocale, type VoiceGender } from '../shared/types/declaration.ts'
 import { createGeminiTtsProvider } from '../server/services/tts/gemini.ts'
 import { SPEECH_LANGUAGE, VOICE_STYLES, buildTranscript } from '../server/services/tts/voiceStyle.ts'
@@ -70,9 +70,10 @@ for (const sample of DECLARATION_SAMPLES) {
     }
   }
 }
-const demoFile = join(root, 'public', DEMO_AUDIO_PATH)
-if (!existsSync(demoFile) || args.has('--force')) {
-  await synthesizeTo(demoFile, demoText(), voices.male, 'pt-BR')
+for (const demo of Object.values(DEMOS)) {
+  const file = join(root, 'public', demoAudioPath(demo))
+  if (existsSync(file) && !args.has('--force')) continue
+  await synthesizeTo(file, demoText(demo), voices[demo.voice], demo.locale)
   generated++
 }
 console.log(generated ? `${generated} áudio(s) gerado(s).` : 'Todos os áudios já existem (use --force para regerar).')
