@@ -1,0 +1,174 @@
+{
+  "app": {
+    "home": "Falamor, página inicial",
+    "language": "Idioma"
+  },
+  "common": {
+    "optional": "(opcional)"
+  },
+  "seo": {
+    "homeTitle": "Falamor: declarações de amor com fotos, voz e música",
+    "homeDescription": "Transforme as fotos de vocês numa declaração de amor falada, com música, pronta para enviar pelo WhatsApp.",
+    "createTitle": "Criar declaração | Falamor"
+  },
+  "landing": {
+    "title": "Transforme as fotos de vocês numa declaração de amor falada",
+    "lead": "Escolha as fotos, escreva o que sente e a gente transforma tudo numa recordação com voz e música, pronta para enviar a quem você ama.",
+    "cta": "Criar minha declaração",
+    "example": "Ver um exemplo",
+    "howTitle": "Como funciona",
+    "step1Title": "Escolha até 10 fotos",
+    "step1Text": "Das viagens, dos aniversários e das bobeiras do dia a dia.",
+    "step2Title": "Diga o que sente",
+    "step2Text": "Com as suas palavras ou com uma das nossas declarações.",
+    "step3Title": "Envie o link",
+    "step3Text": "Quem você ama abre no celular, aumenta o som e sente cada palavra.",
+    "demoPartner": "Marina"
+  },
+  "wizard": {
+    "progressLabel": "Progresso",
+    "stepOf": "Passo {step} de {total}",
+    "steps": {
+      "names": "Nomes",
+      "photos": "Fotos",
+      "declaration": "Declaração",
+      "preview": "Prévia"
+    },
+    "back": "Voltar",
+    "next": "Continuar",
+    "need": {
+      "names": "Preencha os dois nomes para continuar.",
+      "photos": "Adicione pelo menos uma foto.",
+      "processing": "Aguarde as fotos terminarem de carregar.",
+      "text": "Escreva pelo menos {min} caracteres.",
+      "textMax": "A declaração passou de {max} caracteres."
+    }
+  },
+  "names": {
+    "title": "Para quem é essa declaração?",
+    "subtitle": "Os nomes aparecem na abertura e no final da apresentação.",
+    "author": "Seu nome",
+    "authorPlaceholder": "Ex.: Rafael",
+    "partner": "Nome do seu amor",
+    "partnerPlaceholder": "Ex.: Marina",
+    "since": "Desde quando vocês estão juntos?",
+    "sinceHint": "Se preencher, mostramos um contador do tempo de vocês juntos."
+  },
+  "photos": {
+    "title": "Escolha as fotos de vocês",
+    "subtitle": "Até {max} fotos. A primeira vira a capa.",
+    "pick": "Toque para escolher as fotos",
+    "pickHint": "Até {max}, da galeria do celular ou do computador",
+    "reorderHint": "Segure e arraste uma foto para mudar a ordem.",
+    "alt": "Foto {n}",
+    "cover": "Capa",
+    "remove": "Remover foto {n}",
+    "addMore": "Adicionar",
+    "count": "{n} de {max}",
+    "overLimit": "O limite é de {max} fotos; as que passaram ficaram de fora.",
+    "failed": "1 foto não pôde ser aberta. Use fotos JPG ou PNG. | {n} fotos não puderam ser abertas. Use fotos JPG ou PNG."
+  },
+  "declaration": {
+    "title": "O que você quer dizer?",
+    "subtitle": "Escolha uma das nossas declarações ou escreva com as suas palavras.",
+    "optionsLabel": "Declaração",
+    "editSample": "Editar este texto",
+    "writeOwn": "Escrever a minha",
+    "writeOwnHint": "Com as suas palavras, do seu jeito.",
+    "editorLabel": "Sua declaração",
+    "editorPlaceholder": "Comece pelo que você sente quando olha para essas fotos…",
+    "editorHint": "Ela será lida em voz alta do jeito que estiver escrita.",
+    "tooShort": "Escreva pelo menos {min} caracteres.",
+    "voiceLabel": "Voz da declaração",
+    "voice": {
+      "female": "Voz feminina",
+      "male": "Voz masculina"
+    },
+    "musicLabel": "Música de fundo",
+    "musicHint": "Toque para ouvir um trecho.",
+    "music": {
+      "piano_warm": "Piano",
+      "cinema_strings": "Cinema",
+      "starlight_box": "Caixinha de música",
+      "serenade_pad": "Serenata"
+    }
+  },
+  "preview": {
+    "title": "Tudo pronto, {name}!",
+    "subtitle": "Veja como {name} vai receber a sua declaração.",
+    "open": "Ver prévia",
+    "preparing": "Preparando a voz…",
+    "publish": "Publicar e copiar link",
+    "soon": "em breve",
+    "publishInfo": "A publicação chega na próxima versão. Por enquanto, veja a prévia quantas vezes quiser.",
+    "restart": "Começar outra declaração",
+    "restartConfirm": "Apagar este rascunho e começar do zero?",
+    "withoutVoice": "Ver a prévia sem a voz",
+    "errors": {
+      "notConfigured": "A voz ainda não está configurada neste ambiente.",
+      "rateLimited": "Muitas vozes geradas em pouco tempo. Tente de novo daqui a pouco.",
+      "generic": "Não conseguimos preparar a voz agora. Tente de novo."
+    }
+  },
+  "player": {
+    "label": "Declaração para {name}",
+    "titleTo": "Para",
+    "titleFrom": "com amor, {name}",
+    "mute": "Silenciar",
+    "unmute": "Ativar som",
+    "close": "Fechar prévia",
+    "resume": "Continuar",
+    "protectedNote": "A prévia pausa quando sai da tela, para proteger a sua declaração.",
+    "cover": {
+      "line1": "{name} preparou uma surpresa",
+      "line2": "para você, {name}",
+      "open": "Abrir a declaração",
+      "tap": "Toque no lacre para abrir",
+      "preparing": "Preparando…",
+      "sound": "Aumente o som"
+    },
+    "outro": {
+      "together": "Juntos há",
+      "forever": "Hoje, amanhã e sempre.",
+      "replay": "Assistir de novo",
+      "closePreview": "Fechar prévia",
+      "createYours": "Crie a sua declaração no Falamor"
+    }
+  },
+  "together": {
+    "years": "{n} ano | {n} anos",
+    "months": "{n} mês | {n} meses",
+    "days": "{n} dia | {n} dias",
+    "today": "Juntos desde hoje",
+    "summary": "Juntos há {time}",
+    "unit": {
+      "years": "ano | anos",
+      "months": "mês | meses",
+      "days": "dia | dias",
+      "hours": "hora | horas",
+      "minutes": "minuto | minutos",
+      "seconds": "segundo | segundos"
+    }
+  },
+  "watermark": {
+    "text": "prévia",
+    "badge": "Prévia",
+    "hint": "Publique para enviar sem marca d'água"
+  },
+  "og": {
+    "title": "Oi, {name}. Fiz essa declaração para você ❤️",
+    "description": "Aumente o som, aperte o play e venha reviver a nossa história comigo. Com amor, {name} 💌"
+  },
+  "expired": {
+    "title": "Essa declaração já cumpriu sua missão 💗",
+    "text": "As declarações ficam no ar por {days} dias. Que tal criar uma nova para quem você ama?",
+    "cta": "Criar minha declaração"
+  },
+  "error": {
+    "notFoundTitle": "Não encontramos essa página",
+    "notFoundText": "O link pode estar incompleto. Confira se copiou tudo.",
+    "genericTitle": "Algo deu errado por aqui",
+    "genericText": "Tente de novo em instantes.",
+    "cta": "Voltar ao início"
+  }
+}

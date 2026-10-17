@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/*
+ * Falamor — tokens
+ * papel blush, rosa de lacre, tinta ameixa. Display: Bodoni Moda (carta de amor);
+ * interface: Nunito (arredondada, amigável para quem não é técnico).
+ */
+@theme {
+  --color-paper: #fff7f8;
+  --color-petal: #fbe3e9;
+  --color-blush: #f6cfda;
+  --color-line: #efcdd7;
+  --color-rose: #c8385e;
+  --color-rose-deep: #9e2447;
+  --color-ink: #3b1e2a;
+  --color-ink-soft: #7a5866;
+  --color-night: #1d0e16;
+
+  --font-display: "Bodoni Moda", ui-serif, Georgia, serif;
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-rose: 0 14px 30px -14px rgb(158 36 71 / 0.55);
+  --shadow-soft: 0 1px 2px rgb(59 30 42 / 0.06), 0 8px 24px -12px rgb(59 30 42 / 0.18);
+
+  --ease-gentle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 3px solid color-mix(in oklab, var(--color-rose) 70%, white);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+
+  ::selection {
+    background: var(--color-blush);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .field-label {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .field-hint {
+    font-size: 0.9375rem;
+    color: var(--color-ink-soft);
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 3.5rem;
+    padding: 0.875rem 1.125rem;
+    border-radius: 1.125rem;
+    border: 1.5px solid var(--color-line);
+    background: white;
+    color: var(--color-ink);
+    font-size: 1.125rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .field-input::placeholder {
+    color: color-mix(in oklab, var(--color-ink-soft) 70%, white);
+  }
+
+  .field-input:focus {
+    outline: none;
+    border-color: var(--color-rose);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-rose) 14%, transparent);
+  }
+}
+
+/* Proteção da prévia: nada é impresso enquanto o player está aberto. */
+@media print {
+  html.capture-guard body {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "app": {
+    "home": "Falamor home",
+    "language": "Language"
+  },
+  "common": {
+    "optional": "(optional)"
+  },
+  "seo": {
+    "homeTitle": "Falamor: love declarations with photos, voice and music",
+    "homeDescription": "Turn your photos into a spoken love declaration with music, ready to send on WhatsApp.",
+    "createTitle": "Create a declaration | Falamor"
+  },
+  "landing": {
+    "title": "Turn your photos into a love declaration they can hear",
+    "lead": "Pick your photos, write what you feel and we turn it into a memory with voice and music, ready to send to the one you love.",
+    "cta": "Create my declaration",
+    "example": "See an example",
+    "howTitle": "How it works",
+    "step1Title": "Pick up to 10 photos",
+    "step1Text": "Trips, birthdays and the silly everyday moments.",
+    "step2Title": "Say what you feel",
+    "step2Text": "In your own words or with one of our declarations.",
+    "step3Title": "Send the link",
+    "step3Text": "They open it on their phone, turn up the sound and feel every word.",
+    "demoPartner": "Noah"
+  },
+  "wizard": {
+    "progressLabel": "Progress",
+    "stepOf": "Step {step} of {total}",
+    "steps": {
+      "names": "Names",
+      "photos": "Photos",
+      "declaration": "Message",
+      "preview": "Preview"
+    },
+    "back": "Back",
+    "next": "Continue",
+    "need": {
+      "names": "Fill in both names to continue.",
+      "photos": "Add at least one photo.",
+      "processing": "Wait for the photos to finish loading.",
+      "text": "Write at least {min} characters.",
+      "textMax": "The declaration is over {max} characters."
+    }
+  },
+  "names": {
+    "title": "Who is this declaration for?",
+    "subtitle": "The names show up at the opening and at the end.",
+    "author": "Your name",
+    "authorPlaceholder": "e.g. Olivia",
+    "partner": "Your love's name",
+    "partnerPlaceholder": "e.g. Noah",
+    "since": "When did you get together?",
+    "sinceHint": "If you fill this in, we show a counter of your time together."
+  },
+  "photos": {
+    "title": "Choose your photos",
+    "subtitle": "Up to {max} photos. The first one becomes the cover.",
+    "pick": "Tap to choose photos",
+    "pickHint": "Up to {max}, from your phone or computer",
+    "reorderHint": "Press and drag a photo to change the order.",
+    "alt": "Photo {n}",
+    "cover": "Cover",
+    "remove": "Remove photo {n}",
+    "addMore": "Add",
+    "count": "{n} of {max}",
+    "overLimit": "The limit is {max} photos; the extra ones were left out.",
+    "failed": "1 photo couldn't be opened. Use JPG or PNG photos. | {n} photos couldn't be opened. Use JPG or PNG photos."
+  },
+  "declaration": {
+    "title": "What do you want to say?",
+    "subtitle": "Pick one of our declarations or write it in your own words.",
+    "optionsLabel": "Declaration",
+    "editSample": "Edit this text",
+    "writeOwn": "Write my own",
+    "writeOwnHint": "In your own words, your way.",
+    "editorLabel": "Your declaration",
+    "editorPlaceholder": "Start with what you feel when you look at these photos…",
+    "editorHint": "It will be read aloud exactly as written.",
+    "tooShort": "Write at least {min} characters.",
+    "voiceLabel": "Voice",
+    "voice": {
+      "female": "Female voice",
+      "male": "Male voice"
+    },
+    "musicLabel": "Background music",
+    "musicHint": "Tap to hear a sample.",
+    "music": {
+      "piano_warm": "Piano",
+      "cinema_strings": "Cinema",
+      "starlight_box": "Music box",
+      "serenade_pad": "Serenade"
+    }
+  },
+  "preview": {
+    "title": "All set, {name}!",
+    "subtitle": "See how {name} will receive your declaration.",
+    "open": "Watch preview",
+    "preparing": "Preparing the voice…",
+    "publish": "Publish and copy link",
+    "soon": "soon",
+    "publishInfo": "Publishing arrives in the next version. For now, watch the preview as many times as you like.",
+    "restart": "Start a new declaration",
+    "restartConfirm": "Delete this draft and start over?",
+    "withoutVoice": "Watch the preview without the voice",
+    "errors": {
+      "notConfigured": "The voice isn't set up in this environment yet.",
+      "rateLimited": "Too many voices generated in a short time. Try again in a bit.",
+      "generic": "We couldn't prepare the voice right now. Try again."
+    }
+  },
+  "player": {
+    "label": "Declaration for {name}",
+    "titleTo": "For",
+    "titleFrom": "with love, {name}",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "close": "Close preview",
+    "resume": "Continue",
+    "protectedNote": "The preview pauses when it leaves the screen, to protect your declaration.",
+    "cover": {
+      "line1": "{name} made something special",
+      "line2": "just for you, {name}",
+      "open": "Open the declaration",
+      "tap": "Tap the seal to open",
+      "preparing": "Getting ready…",
+      "sound": "Turn up the volume"
+    },
+    "outro": {
+      "together": "Together for",
+      "forever": "Today, tomorrow and always.",
+      "replay": "Watch again",
+      "closePreview": "Close preview",
+      "createYours": "Make your own declaration on Falamor"
+    }
+  },
+  "together": {
+    "years": "{n} year | {n} years",
+    "months": "{n} month | {n} months",
+    "days": "{n} day | {n} days",
+    "today": "Together since today",
+    "summary": "Together for {time}",
+    "unit": {
+      "years": "year | years",
+      "months": "month | months",
+      "days": "day | days",
+      "hours": "hour | hours",
+      "minutes": "minute | minutes",
+      "seconds": "second | seconds"
+    }
+  },
+  "watermark": {
+    "text": "preview",
+    "badge": "Preview",
+    "hint": "Publish to send it without the watermark"
+  },
+  "og": {
+    "title": "Hi, {name}. I made this declaration for you ❤️",
+    "description": "Turn up the volume, press play and relive our story with me. With love, {name} 💌"
+  },
+  "expired": {
+    "title": "This declaration has completed its mission 💗",
+    "text": "Declarations stay online for {days} days. How about making a new one for someone you love?",
+    "cta": "Create my declaration"
+  },
+  "error": {
+    "notFoundTitle": "We couldn't find this page",
+    "notFoundText": "The link may be incomplete. Check that you copied all of it.",
+    "genericTitle": "Something went wrong",
+    "genericText": "Try again in a moment.",
+    "cta": "Back to home"
+  }
+}
