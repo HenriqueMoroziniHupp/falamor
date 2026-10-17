@@ -1,5 +1,6 @@
 import type { PublicDeclaration } from '#shared/types/declaration'
 import { sampleAudioPath, sampleText } from '#shared/samples'
+import { DEMO_AUDIO_PATH, DEMO_PARTNER_NAME, demoText } from '#shared/demo'
 
 /**
  * Contrato de persistência das declarações publicadas.
@@ -30,14 +31,15 @@ export function createMockDeclarationRepository({ ttlDays }: { ttlDays: number }
         id: 'demo',
         locale: 'pt-BR' as const,
         authorName: 'Rafael',
-        partnerName: 'Marina',
+        partnerName: DEMO_PARTNER_NAME,
         startDate: '2022-02-14',
         voice: 'male' as const,
         music: 'piano_warm' as const,
-        text: sampleText('lugar-favorito', 'pt-BR', 'male'),
+        // Única com o nome falado no áudio (ver shared/demo.ts).
+        text: demoText(),
         photoUrls: DEMO_PHOTOS,
         coverUrl: '/demo/cover.jpg',
-        audioUrl: sampleAudioPath('lugar-favorito', 'pt-BR', 'male'),
+        audioUrl: DEMO_AUDIO_PATH,
       },
       1,
       ttlDays,
@@ -64,7 +66,7 @@ export function createMockDeclarationRepository({ ttlDays }: { ttlDays: number }
         id: 'demo-expirada',
         locale: 'pt-BR' as const,
         authorName: 'Rafael',
-        partnerName: 'Marina',
+        partnerName: DEMO_PARTNER_NAME,
         startDate: null,
         voice: 'male' as const,
         music: 'cinema_strings' as const,

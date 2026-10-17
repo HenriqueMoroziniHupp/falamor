@@ -56,7 +56,7 @@ The server cache key hashes `[model, voiceName, style, locale, normalizedText]`,
 
 TTS is abstracted behind the `TtsProvider` interface (`server/services/tts/`). `gemini.ts` is the implementation. The delivery style (`voiceStyle.ts`) is sent as metadata, not as spoken text. WAV/PCM responses are converted to MP3 with lamejs (`wavToMp3.ts`).
 
-Pre-generating sample audio depends on sample texts **having no names**. Portuguese samples have male and female variants that differ only in "Obrigado/Obrigada" (the speaker's gender). `revoiceSampleText` swaps these in an unedited custom copy when the voice changes. If you edit a sample text, you must rerun `samples:generate`.
+Pre-generating sample audio depends on sample texts **having no names**. Portuguese samples have male and female variants that differ only in "Obrigado/Obrigada" (the speaker's gender). `revoiceSampleText` swaps these in an unedited custom copy when the voice changes. If you edit a sample text, you must rerun `samples:generate`. The one exception is the `/d/demo` showcase: `shared/demo.ts` adds the partner name to a sample, and its audio is generated separately into `public/audio/demo` (ADR 0013).
 
 ### Playback: one AudioContext as the master clock
 - `usePlayback` plays the voice buffer and the `RomanticAudioEngine` music through the **same AudioContext**. Presentation time is `ctx.currentTime - startAt`, so suspending the context pauses slides, captions, voice and music together, without drift. Don't add independent timers or `<audio>` elements for anything that must stay in sync.

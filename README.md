@@ -11,7 +11,7 @@ Prompt original: [falamor-init-prompt.md](falamor-init-prompt.md) · Próximos p
 ```bash
 npm install            # usa .npmrc com legacy-peer-deps (conflito opcional esbuild/vite 8)
 cp .env.example .env   # e preencha NUXT_GEMINI_API_KEY
-npm run samples:generate   # gera os 12 áudios das declarações de exemplo (uma vez só)
+npm run samples:generate   # gera os 12 áudios de exemplo + o da demo (uma vez só)
 npm run dev                # http://localhost:3000
 ```
 
