@@ -66,7 +66,7 @@ export class RomanticAudioEngine {
   ctx: AudioContext | null = null
   isPlaying = false
   style: MusicStyle = 'piano_warm'
-  userVolume = 0.96
+  userVolume = 0.90
   isDucked = false
 
   private masterGain: GainNode | null = null

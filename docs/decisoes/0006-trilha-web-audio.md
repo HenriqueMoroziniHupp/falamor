@@ -13,7 +13,7 @@ O `RomanticAudioEngine` foi completado com:
 - crossfade ao trocar de estilo;
 - *ducking* sob a voz.
 
-Volume base 0,36; durante a fala cai para 50%, ajuste de 2026-10-16 porque estava baixo.
+Volume base 0,90; durante a fala cai para 50%, ajuste de 2026-10-16 porque estava baixo.
 
 ## Consequências
 - Sem custo nem risco de direitos autorais. Arquivo nenhum para baixar.
