@@ -91,6 +91,7 @@ function open() {
   display: grid;
   place-items: center;
   overflow: hidden;
+  /* app/spa-loading-template.html repete este gradiente: se mudar aqui, mudar lá. */
   background: radial-gradient(circle at 50% 28%, #fff 0%, var(--color-paper) 42%, var(--color-petal) 100%);
   color: var(--color-ink);
   transition: opacity 0.5s ease 1s, transform 0.6s var(--ease-gentle) 1s;

@@ -1,0 +1,40 @@
+<!--
+  Tela de carregamento das páginas montadas no navegador (ADR 0012). Vai no HTML de casca
+  e some no `app:suspense:resolve`. Sem JS, fonte ou arquivo externo: tudo inline.
+  Cores: gradiente do envelope (PlayerCover.vue, paper #fff7f8 → petal #fbe3e9) e o rosa
+  do favicon (#c8385e). Se mudarem lá, mudar aqui.
+-->
+<style>
+  .fl-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 50% 28%, #fff 0%, #fff7f8 42%, #fbe3e9 100%);
+  }
+  .fl-loader svg {
+    width: 4.5rem;
+    height: 4.5rem;
+    opacity: 0;
+    will-change: transform;
+    animation: fl-in 0.3s ease 0.2s both, fl-beat 1.6s ease-in-out 0.5s infinite;
+  }
+  @keyframes fl-in {
+    to { opacity: 1; }
+  }
+  /* "tum-tum": duas batidas e um respiro */
+  @keyframes fl-beat {
+    0%, 28%, 70%, 100% { transform: scale(1); }
+    14% { transform: scale(1.12); }
+    42% { transform: scale(1.07); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fl-loader svg { animation: fl-in 0.3s ease 0.2s both; }
+  }
+</style>
+<div class="fl-loader" role="progressbar" aria-label="Falamor">
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+    <path fill="#c8385e" d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z" />
+  </svg>
+</div>

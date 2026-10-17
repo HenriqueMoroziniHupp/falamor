@@ -15,6 +15,7 @@ Registro curto de decisões que alguém (você no futuro, ou outra IA) poderia q
 | [0009](0009-funcionar-sem-contexto-seguro.md) | Funcionar em HTTP na rede local | aceita |
 | [0010](0010-expiracao-7-dias.md) | Expiração em 7 dias (lifecycle R2 + tarefa) | proposta |
 | [0011](0011-renderizacao-landing-ssr-resto-spa.md) | Só a landing no servidor; o resto no navegador (OG injetado) | aceita |
+| [0012](0012-tela-de-carregamento.md) | Tela de carregamento estática nas páginas montadas no navegador | aceita |
 
 ## Modelo
 

@@ -38,6 +38,8 @@ Test routes: `/criar` (wizard), `/d/demo`, `/en/d/demo-en`, `/d/demo-expirada` (
 ### Rendering (ADR 0011)
 Only the landing (`/`, `/en`) is server-generated, prerendered at build time for SEO. Everything else is `ssr: false` via `routeRules['/**']` in `nuxt.config.ts`, so new pages are client-rendered by default. Landing copy changes need a rebuild.
 
+Client-rendered pages ship `app/spa-loading-template.html` in their HTML shell (ADR 0012): a blush background with a pulsing heart, so nobody sees a blank screen while JS loads. Nuxt removes it on `app:suspense:resolve`, which on `/d/[id]` waits for the `await useFetch`. Keep it free of external resources (no JS, fonts or files). `tests/unit/spaLoadingTemplate.test.ts` checks this. Its background copies the `PlayerCover` gradient, so the swap to the envelope has no visible cut.
+
 ### Code layout and auto-imports
 - `app/`: Nuxt 4 srcDir. Components are registered **by filename without a folder prefix** (`pathPrefix: false`), so `components/player/DeclarationPlayer.vue` is `<DeclarationPlayer>`. Component filenames must stay globally unique.
 - `app/utils/*` (e.g. `idb`, `compressImage`) and `app/composables/*` are auto-imported. `app/lib/*` is **not** auto-imported: import it from `~/lib/...`. It holds pure logic (`timeline.ts`, `player.ts`) and the `RomanticAudioEngine` class.
