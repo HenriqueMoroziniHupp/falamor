@@ -18,6 +18,8 @@ const props = defineProps<{
 const emit = defineEmits<{ audioGenerated: [key: string]; restart: [] }>()
 
 const { t, locale } = useI18n()
+const route = useRoute()
+const router = useRouter()
 const audio = useDeclarationAudio()
 const playerDeclaration = shallowRef<PlayerDeclaration | null>(null)
 const showPublishInfo = shallowRef(false)
@@ -28,7 +30,21 @@ watch(playerDeclaration, (open) => (scrollLock.value = Boolean(open)))
 const coverStyle = computed(() => (props.photoUrls[0] ? { backgroundImage: `url("${props.photoUrls[0]}")` } : undefined))
 const loading = computed(() => audio.status.value === 'loading')
 
+// A prévia aberta é uma entrada no histórico (?previa=1): o "voltar" do celular fecha a prévia.
+watch(
+  () => route.query.previa,
+  (open) => {
+    if (!open) playerDeclaration.value = null
+  },
+)
+
+// Recarregou com a prévia aberta: não há o que mostrar, tira a marca da URL.
+onMounted(() => {
+  if (route.query.previa) void router.replace({ query: { ...route.query, previa: undefined } })
+})
+
 function openPlayer(audioUrl: string | null) {
+  if (!route.query.previa) void router.push({ query: { ...route.query, previa: '1' } })
   playerDeclaration.value = {
     authorName: props.authorName,
     partnerName: props.partnerName,
@@ -53,7 +69,8 @@ async function openPreview() {
 }
 
 function closePreview() {
-  playerDeclaration.value = null
+  if (route.query.previa) router.back()
+  else playerDeclaration.value = null
 }
 
 function restart() {

@@ -12,16 +12,10 @@ const allowCustom = Boolean(config.public.customText)
 const draft = useDraft()
 const { state, photos, ready, processing } = draft
 
-const photoNotice = shallowRef<string | null>(null)
+const route = useRoute()
+const router = useRouter()
 
-// Sem texto próprio, um rascunho antigo em modo 'custom' volta para o exemplo escolhido.
-watch(
-  ready,
-  (isReady) => {
-    if (isReady && !allowCustom && state.textMode === 'custom') state.textMode = 'sample'
-  },
-  { immediate: true },
-)
+const photoNotice = shallowRef<string | null>(null)
 
 const labels = computed(() => [t('wizard.steps.names'), t('wizard.steps.photos'), t('wizard.steps.declaration'), t('wizard.steps.preview')])
 const step = computed(() => Math.min(state.step, labels.value.length - 1))
@@ -29,9 +23,9 @@ const text = computed(() => draft.declarationText(locale.value as AppLocale))
 const textLength = computed(() => text.value.trim().length)
 const photoUrls = computed(() => photos.value.map((p) => p.url))
 
-/** O que falta para continuar (null = pode seguir). */
-const blocker = computed<string | null>(() => {
-  switch (step.value) {
+/** O que falta para concluir a etapa `index` (null = pode seguir). */
+function blockerAt(index: number): string | null {
+  switch (index) {
     case 0:
       return state.authorName.trim() && state.partnerName.trim() ? null : t('wizard.need.names')
     case 1:
@@ -43,12 +37,80 @@ const blocker = computed<string | null>(() => {
     default:
       return null
   }
+}
+
+const blocker = computed(() => blockerAt(step.value))
+
+/** Etapa mais avançada que dá para abrir: a primeira que ainda tem pendência. */
+const maxReachable = computed(() => {
+  const last = labels.value.length - 1
+  for (let i = 0; i < last; i++) if (blockerAt(i)) return i
+  return last
 })
 
-function go(to: number) {
-  state.step = Math.max(0, Math.min(labels.value.length - 1, to))
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+// ── etapa na URL ─────────────────────────────────────────────────────────
+// Cada etapa é uma entrada no histórico (?etapa=1…4), então o "voltar" do
+// celular/navegador volta uma etapa em vez de sair do assistente.
+
+function stepFromRoute(): number | null {
+  const value = Number(route.query.etapa)
+  return Number.isInteger(value) && value >= 1 ? Math.min(value, labels.value.length) - 1 : null
 }
+
+function stepLocation(index: number) {
+  return { query: { ...route.query, etapa: String(index + 1) } }
+}
+
+function go(to: number) {
+  const target = Math.max(0, Math.min(labels.value.length - 1, to))
+  if (target === step.value) return
+  // Voltar uma etapa pelo botão da tela reaproveita o histórico, para não empilhar entradas.
+  const previous = window.history.state?.back as string | null | undefined
+  if (target === step.value - 1 && previous?.includes(`etapa=${target + 1}`)) router.back()
+  else void router.push(stepLocation(target))
+}
+
+watch(
+  () => route.query.etapa,
+  () => {
+    if (!ready.value) return
+    const requested = stepFromRoute()
+    if (requested === null) return
+    // Avançar pelo histórico não pode pular uma etapa que deixou de estar completa.
+    const allowed = Math.min(requested, maxReachable.value)
+    if (allowed !== requested) {
+      void router.replace(stepLocation(allowed))
+      return
+    }
+    if (state.step !== allowed) {
+      state.step = allowed
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  },
+)
+
+watch(
+  ready,
+  async (isReady) => {
+    if (!isReady) return
+    // Sem texto próprio, um rascunho antigo em modo 'custom' volta para o exemplo escolhido.
+    if (!allowCustom && state.textMode === 'custom') state.textMode = 'sample'
+
+    const requested = stepFromRoute()
+    if (requested !== null) {
+      state.step = Math.min(requested, maxReachable.value)
+      if (state.step !== requested) await router.replace(stepLocation(state.step))
+      return
+    }
+    // Rascunho retomado em /criar: recria o histórico das etapas anteriores,
+    // para o "voltar" passar por elas antes de sair para a landing.
+    const resumeAt = Math.min(state.step, maxReachable.value)
+    state.step = 0
+    await router.replace(stepLocation(0))
+    for (let i = 1; i <= resumeAt; i++) await router.push(stepLocation(i))
+  },
+  { immediate: true },
+)
 
 async function onAddPhotos(files: File[]) {
   photoNotice.value = null
@@ -62,7 +124,7 @@ async function onAddPhotos(files: File[]) {
 async function onRestart() {
   await draft.reset()
   photoNotice.value = null
-  go(0)
+  await router.replace(stepLocation(0))
 }
 </script>
 
