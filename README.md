@@ -4,7 +4,7 @@ Gerador de declarações de amor no estilo "Recordações" do Google Fotos: foto
 
 O piloto roda **local**: sem banco, sem bucket, sem login, sem pagamento. O rascunho, as fotos e os áudios gerados ficam no IndexedDB do navegador. A chave do Gemini fica só no servidor do Nuxt (Nitro).
 
-Prompt original: [falamor-init-prompt.md](falamor-init-prompt.md).
+Prompt original: [falamor-init-prompt.md](falamor-init-prompt.md) · Próximos passos: [ROADMAP.md](ROADMAP.md) · Produto, marca, decisões e experimentos: [docs/](docs/README.md).
 
 ## Rodando
 

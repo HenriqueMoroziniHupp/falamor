@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Falamor: a Nuxt 4 (SSR) app that turns a couple's photos and a love declaration into a Google Photos "Memories"-style slideshow, with the declaration read aloud by Gemini TTS, background music synthesized live with the Web Audio API, and a "time together" counter. The original product brief is in `falamor-init-prompt.md`, and `README.md` covers the behavior in detail (both in Portuguese).
 
+Before changing behavior, check `docs/decisoes/` (ADRs: why things are the way they are) and `ROADMAP.md` (what phase we're in). If you make a decision someone could question later, add a new ADR. Product and brand guidance is in `docs/produto.md` and `docs/marca.md`.
+
 **This is the pilot phase.** It runs locally with no database, bucket, login or payments. Drafts, photos and generated audio live in the browser's IndexedDB. The only server work is TTS generation plus mock declaration data. The Gemini key exists only server-side, in Nitro `runtimeConfig`.
 
 Code comments, README and commit-style prose are in Portuguese (pt-BR). Keep new comments in Portuguese to match.
