@@ -1,0 +1,62 @@
+<!doctype html>
+<!--
+  Fonte da imagem de compartilhamento da landing (og:image, 1200×630).
+  ?lang=en troca o slogan para inglês. Para regenerar (Chrome headless, precisa de internet p/ as fontes):
+    C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    for l in pt en; do "$C" --headless=new --hide-scrollbars --virtual-time-budget=5000 --window-size=1200,630 \
+      --screenshot="$PWD/public/og/falamor-$l.png" "file://$PWD/scripts/og/landing.html?lang=$l"
+      sips -s format jpeg -s formatOptions 88 public/og/falamor-$l.png --out public/og/falamor-$l.jpg && rm public/og/falamor-$l.png; done
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Nunito:wght@600&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    /* Mesmo gradiente da capa do player (PlayerCover) */
+    background: radial-gradient(circle at 50% 38%, #fff 0%, #FFF7F8 42%, #FBE3E9 100%);
+    font-family: 'Nunito', sans-serif;
+  }
+  .heart { position: absolute; fill: #C8385E; }
+  .wordmark {
+    position: relative;
+    display: inline-flex; align-items: flex-start; gap: 6px;
+    font-family: 'Bodoni Moda', serif; font-style: italic; font-weight: 500;
+    font-size: 188px; line-height: 1; letter-spacing: -0.01em;
+    color: #9E2447;
+  }
+  .wordmark svg { width: 56px; height: 56px; fill: #C8385E; margin-top: 18px; }
+  .tagline {
+    margin-top: 34px;
+    font-size: 40px; font-weight: 600; color: #7A5866; letter-spacing: 0.005em;
+  }
+  .rule { width: 72px; height: 3px; border-radius: 3px; background: #EEB4C4; margin-top: 30px; }
+</style>
+</head>
+<body>
+  <!-- Corações espalhados, como os que sobem no fundo do app -->
+  <svg class="heart" style="left:110px;top:92px;width:46px;opacity:.22;transform:rotate(-14deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="left:200px;top:400px;width:30px;opacity:.16;transform:rotate(10deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="left:70px;top:500px;width:62px;opacity:.12;transform:rotate(-6deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="left:330px;top:60px;width:22px;opacity:.2;transform:rotate(18deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="right:120px;top:70px;width:58px;opacity:.18;transform:rotate(12deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="right:300px;top:150px;width:24px;opacity:.22;transform:rotate(-10deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="right:90px;top:430px;width:40px;opacity:.2;transform:rotate(-16deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="right:240px;top:520px;width:28px;opacity:.14;transform:rotate(8deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+  <svg class="heart" style="left:470px;top:540px;width:18px;opacity:.18;transform:rotate(-20deg)" viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg>
+
+  <div class="wordmark">falamor<svg viewBox="0 0 32 32"><path d="M16 28.5 4.2 17.1A7.3 7.3 0 0 1 14.5 6.8L16 8.3l1.5-1.5a7.3 7.3 0 0 1 10.3 10.3Z"/></svg></div>
+  <div class="rule"></div>
+  <div class="tagline" id="tagline">Declare seu amor em voz alta</div>
+  <script>
+    if (new URLSearchParams(location.search).get('lang') === 'en') {
+      document.documentElement.lang = 'en'
+      document.getElementById('tagline').textContent = 'Say I love you out loud'
+    }
+  </script>
+</body>
+</html>
