@@ -44,7 +44,8 @@ Fonte da verdade: `app/assets/css/main.css`.
 
 | Onde | Texto |
 | --- | --- |
-| Título da landing | Transforme as fotos de vocês numa declaração de amor falada |
+| Título da landing | Declare seu amor em voz alta |
+| Subtítulo da landing | Suas fotos e palavras viram uma lembrança falada, pronta em minutos, para emocionar quem você ama. |
 | Botão principal | Criar minha declaração |
 | Capa do player | {Autor} preparou uma surpresa / para você, {Parceiro} |
 | Preview do WhatsApp (título) | Oi, {Parceiro}. Fiz essa declaração para você ❤️ |
