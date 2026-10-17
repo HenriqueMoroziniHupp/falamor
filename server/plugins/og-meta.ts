@@ -1,3 +1,4 @@
+import { APP_CONFIG } from '#shared/config'
 import type { AppLocale, PublicDeclaration } from '#shared/types/declaration'
 import en from '../../i18n/locales/en.json'
 import ptBR from '../../i18n/locales/pt-BR.json'
@@ -69,7 +70,7 @@ export default defineNitroPlugin((nitroApp) => {
     if (!match) return
 
     const config = useRuntimeConfig()
-    const ttlDays = Number(config.public.declarationTtlDays)
+    const ttlDays = APP_CONFIG.declaration.ttlDays
     const declaration = await useDeclarationRepository().findById(decodeURIComponent(match[1]!))
     const expired = Boolean(declaration && Date.parse(declaration.expiresAt) <= Date.now())
 

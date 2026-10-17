@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { APP_CONFIG } from '#shared/config'
 import type { PlayerDeclaration } from '~/lib/player'
 
 // Montada no navegador (ADR 0011). As tags OG e o status 404/410 vêm do servidor,
@@ -7,7 +8,6 @@ definePageMeta({ layout: false })
 
 const route = useRoute()
 const { t } = useI18n()
-const config = useRuntimeConfig()
 const localePath = useLocalePath()
 
 const id = String(route.params.id)
@@ -48,7 +48,7 @@ useHead({
       <HeartsBackground />
       <div class="expired-card">
         <h1 class="expired-title">{{ t('expired.title') }}</h1>
-        <p class="expired-text">{{ t('expired.text', { days: config.public.declarationTtlDays }) }}</p>
+        <p class="expired-text">{{ t('expired.text', { days: APP_CONFIG.declaration.ttlDays }) }}</p>
         <UiButton :to="localePath('/criar')">{{ t('expired.cta') }}</UiButton>
       </div>
     </div>

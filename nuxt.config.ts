@@ -25,17 +25,11 @@ export default defineNuxtConfig({
 
   // Tudo que é segredo fica fora de `public` e só existe no servidor (Nitro).
   // Cada chave pode ser sobrescrita por env: NUXT_GEMINI_API_KEY, NUXT_PUBLIC_SITE_URL…
+  // Modelo, vozes e limites do produto ficam em shared/config.ts.
   runtimeConfig: {
     geminiApiKey: '',
-    ttsModel: 'gemini-3.8-flash-lite-tts',
-    ttsVoiceFemale: 'Sulafat',
-    ttsVoiceMale: 'Algieba',
-    ttsRateLimitPerHour: 20,
     public: {
       siteUrl: 'http://localhost:3000',
-      declarationTtlDays: 7,
-      maxPhotos: 10,
-      maxDeclarationChars: 1000,
       // Texto próprio + geração de voz pelo Gemini. Desligado no deploy de demonstração:
       // só as declarações de exemplo, com os áudios já gerados em public/ (custo zero).
       // Para ligar: NUXT_PUBLIC_CUSTOM_TEXT=true.

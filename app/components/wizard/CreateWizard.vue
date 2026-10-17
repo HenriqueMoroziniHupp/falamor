@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { APP_CONFIG } from '#shared/config'
 import type { AppLocale } from '#shared/types/declaration'
 
 const MIN_CHARS = 20
 
 const { t, locale } = useI18n()
 const config = useRuntimeConfig()
-const maxPhotos = Number(config.public.maxPhotos)
-const maxChars = Number(config.public.maxDeclarationChars)
+const maxPhotos = APP_CONFIG.declaration.maxPhotos
+const maxChars = APP_CONFIG.declaration.maxChars
 const allowCustom = Boolean(config.public.customText)
 
 const draft = useDraft()

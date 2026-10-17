@@ -1,3 +1,4 @@
+import { APP_CONFIG } from '#shared/config'
 import { isAppLocale, isVoiceGender } from '#shared/types/declaration'
 import { normalizeDeclarationText, sha256Hex } from '#shared/utils/text'
 import type { TtsProvider } from '../services/tts/TtsProvider'
@@ -26,17 +27,17 @@ export default defineEventHandler(async (event) => {
 
   if (typeof body?.text !== 'string') throw createError({ statusCode: 400, statusMessage: 'invalid_text' })
   const text = normalizeDeclarationText(body.text)
-  if (text.length < MIN_CHARS || text.length > Number(config.public.maxDeclarationChars)) {
+  if (text.length < MIN_CHARS || text.length > APP_CONFIG.declaration.maxChars) {
     throw createError({ statusCode: 400, statusMessage: 'invalid_text_length' })
   }
   if (!isVoiceGender(body.voice)) throw createError({ statusCode: 400, statusMessage: 'invalid_voice' })
   if (!isAppLocale(body.locale)) throw createError({ statusCode: 400, statusMessage: 'invalid_locale' })
 
   const locale = body.locale
-  const voiceName = body.voice === 'female' ? config.ttsVoiceFemale : config.ttsVoiceMale
+  const voiceName = APP_CONFIG.tts.voices[body.voice]
   const style = VOICE_STYLES[locale]
   // Qualquer mudança de texto, voz, estilo ou modelo gera outra chave → outro áudio.
-  const cacheKey = await sha256Hex(JSON.stringify([config.ttsModel, voiceName, style, locale, text]))
+  const cacheKey = await sha256Hex(JSON.stringify([APP_CONFIG.tts.model, voiceName, style, locale, text]))
   const itemKey = `${cacheKey}.mp3`
   const storage = useStorage('tts')
 
@@ -51,9 +52,9 @@ export default defineEventHandler(async (event) => {
 
   let job = inflight.get(cacheKey)
   if (!job) {
-    consumeRateLimit(event, { limit: Number(config.ttsRateLimitPerHour), windowMs: HOUR_MS })
+    consumeRateLimit(event, { limit: APP_CONFIG.tts.rateLimitPerHour, windowMs: HOUR_MS })
     job = (async () => {
-      const audio = await getProvider(config.geminiApiKey, config.ttsModel).synthesize({
+      const audio = await getProvider(config.geminiApiKey, APP_CONFIG.tts.model).synthesize({
         text: buildTranscript(text),
         voice: voiceName,
         style,

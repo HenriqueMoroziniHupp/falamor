@@ -104,7 +104,7 @@ tests/unit/               timeline, contador, exemplos/cache key, wav→mp3
 Os pontos de troca já existem:
 
 - **Banco:** implementar `DeclarationRepository` (D1 ou Postgres + Drizzle) e trocar em `server/utils/declarations.ts`.
-- **R2:** trocar o driver de `nitro.storage.tts` (e criar `media`) para o driver S3/R2 do unstorage. Para apagar em 7 dias: **regra de lifecycle do R2** + scheduled task do Nitro como garantia, com `NUXT_PUBLIC_DECLARATION_TTL_DAYS`.
+- **R2:** trocar o driver de `nitro.storage.tts` (e criar `media`) para o driver S3/R2 do unstorage. Para apagar em 7 dias: **regra de lifecycle do R2** + scheduled task do Nitro como garantia, com `APP_CONFIG.declaration.ttlDays`.
 - **Publicar:** endpoint que recebe fotos (já comprimidas no navegador), áudio e capa 1200×630, salva no R2 e devolve `/d/{id}` (com prefixo de idioma para EN).
 - **Login:** `nuxt-auth-utils` com Google OAuth.
 - **Pagamento:** créditos (ex.: 3 declarações por R$ 5) com Stripe ou Mercado Pago/Pix.

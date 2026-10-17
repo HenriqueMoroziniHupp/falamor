@@ -3,7 +3,7 @@
 - **Data:** 2026-10-16
 
 ## Contexto
-As declarações ficam no ar 7 dias (configurável em `NUXT_PUBLIC_DECLARATION_TTL_DAYS`) para não acumular custo no banco e no bucket. O LGPD também pede não guardar fotos de pessoas além do necessário.
+As declarações ficam no ar 7 dias (configurável em `APP_CONFIG.declaration.ttlDays`, em `shared/config.ts`) para não acumular custo no banco e no bucket. O LGPD também pede não guardar fotos de pessoas além do necessário.
 
 ## Decisão
 - **Regra de lifecycle no R2**, que apaga objetos com mais de N dias, como mecanismo principal: não depende do nosso código rodar.

@@ -46,7 +46,7 @@ Uma hipótese por vez, com critério de sucesso definido **antes** de rodar. Res
   - 5 pessoas ouvem às cegas e escolhem a mais emocionante.
 - **Sucesso se:** uma voz de cada gênero leva ≥ 3 de 5 votos.
 - **Resultado:** —
-- **Decisão:** atualizar `NUXT_TTS_VOICE_*` e rodar `samples:generate -- --force`.
+- **Decisão:** atualizar `APP_CONFIG.tts.voices` (`shared/config.ts`) e rodar `samples:generate -- --force`.
 
 ### EXP-04 — Prévia curta vs. completa
 - **Status:** ideia (só rodar se a conversão for baixa)

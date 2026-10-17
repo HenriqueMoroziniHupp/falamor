@@ -9,7 +9,7 @@ O briefing pede `gemini-3.8-flash-lite-tts` com a chave do Google AI Studio. Ess
 - A instrução de estilo ("voz romântica e apaixonada, em forma de declaração…") vai em `speech_metadata.style`, nunca no texto, para não ser lida em voz alta.
 - O idioma vai em `speech_config.language`. Pausas entre parágrafos usam `<short pause>`.
 - O áudio é pedido em MP3 **sem** `bit_rate`: o modelo responde `400 Audio bit_rate is not supported`, como vimos em 2026-10-16. Se vier WAV/PCM, converte com lamejs.
-- Vozes por env: `NUXT_TTS_VOICE_FEMALE` (Sulafat) e `NUXT_TTS_VOICE_MALE` (Algieba). A interface só mostra "feminina/masculina".
+- Vozes em `shared/config.ts` (`APP_CONFIG.tts.voices`): Sulafat (feminina) e Algieba (masculina). A interface só mostra "feminina/masculina".
 - Tudo atrás do contrato `TtsProvider` (`server/services/tts/`).
 
 ## Consequências

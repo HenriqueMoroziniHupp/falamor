@@ -12,6 +12,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { DECLARATION_SAMPLES, sampleAudioPath, sampleText } from '../shared/samples.ts'
 import { DEMOS, demoAudioPath, demoText } from '../shared/demo.ts'
+import { APP_CONFIG } from '../shared/config.ts'
 import { SUPPORTED_LOCALES, VOICE_GENDERS, type AppLocale, type VoiceGender } from '../shared/types/declaration.ts'
 import { createGeminiTtsProvider } from '../server/services/tts/gemini.ts'
 import { SPEECH_LANGUAGE, VOICE_STYLES, buildTranscript } from '../server/services/tts/voiceStyle.ts'
@@ -26,11 +27,8 @@ if (!apiKey) {
   process.exit(1)
 }
 
-const model = process.env.NUXT_TTS_MODEL || 'gemini-3.8-flash-lite-tts'
-const voices: Record<VoiceGender, string> = {
-  female: process.env.NUXT_TTS_VOICE_FEMALE || 'Sulafat',
-  male: process.env.NUXT_TTS_VOICE_MALE || 'Algieba',
-}
+const model = APP_CONFIG.tts.model
+const voices: Record<VoiceGender, string> = APP_CONFIG.tts.voices
 const tts = createGeminiTtsProvider({ apiKey, model })
 
 async function synthesizeTo(file: string, text: string, voice: string, locale: AppLocale) {
