@@ -11,7 +11,7 @@
 - **Tela cheia** no toque do lacre, nos dois modos (prévia e página pública), pedida antes de qualquer `await` (`app/utils/fullscreen.ts`). Sai da tela cheia ao fechar ou desmontar o player. Onde não há suporte (iPhone só permite em `<video>`), nada acontece.
 - **Espera de 500 ms** (`FULLSCREEN_SETTLE_MS`) entre o toque e a animação, só onde há tela cheia: no celular a troca de modo trava um instante e comeria o começo da abertura.
 - **Som de papel gravado**, não sintetizado: a primeira versão em ruído filtrado soou artificial. É o "Paper slide" do Mixkit (`public/audio/sfx/paper-slide.mp3`, ~37 KB, 1,1 s), com licença gratuita para uso comercial e sem atribuição. É baixado e decodificado na montagem do player (`usePlayback.preloadSound`), sem bloquear a preparação, e toca no mesmo AudioContext (`playSound`), junto com a carta subindo (`PAPER_SOUND_AT`). Respeita o mudo e não sofre o ducking da trilha.
-- **Abertura de 2,8 s** (`COVER_OPEN_MS` em `app/lib/player.ts`): lacre → aba → carta saindo à frente da aba → capa some. A trilha começa no toque. Voz, fotos e legendas começam depois da espera e da abertura (`usePlayback.start(delay)`).
+- **Abertura de 5,8 s** (`COVER_OPEN_MS` em `app/lib/player.ts`): lacre → aba → carta saindo à frente da aba → carta parada com o nome por cerca de 1 s → capa some. O nome é o primeiro momento emocional da declaração, então tem tempo para ser lido. A trilha começa no toque. Voz, fotos e legendas começam depois da espera e da abertura (`usePlayback.start(delay)`).
 
 ## Consequências
 - Mudar as transições de `PlayerCover.vue` exige ajustar `COVER_OPEN_MS` e `PAPER_SOUND_AT`.

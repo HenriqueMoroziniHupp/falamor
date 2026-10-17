@@ -17,7 +17,7 @@ export type PlayerMode = 'preview' | 'public'
  * Duração da abertura do envelope (lacre → aba → carta → capa some).
  * Tem que bater com as transições de `PlayerCover.vue`; a apresentação começa depois dela.
  */
-export const COVER_OPEN_MS = 2800
+export const COVER_OPEN_MS = 5800
 
 /** Espera depois de pedir tela cheia: no celular a troca de modo dá uma travada e comeria o começo da animação. */
 export const FULLSCREEN_SETTLE_MS = 500
@@ -26,7 +26,7 @@ export const FULLSCREEN_SETTLE_MS = 500
 export const PAPER_SOUND_URL = '/audio/sfx/paper-slide.mp3'
 
 /** Quando o som toca, em segundos desde o início da animação: junto com a carta subindo. */
-export const PAPER_SOUND_AT = 1.1
+export const PAPER_SOUND_AT = 1.3
 
 export interface SlideLayer {
   key: string

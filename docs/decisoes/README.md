@@ -18,6 +18,7 @@ Registro curto de decisões que alguém (você no futuro, ou outra IA) poderia q
 | [0012](0012-tela-de-carregamento.md) | Tela de carregamento estática nas páginas montadas no navegador | aceita |
 | [0013](0013-nome-falado-na-demo.md) | Nome falado no áudio da demonstração | aceita |
 | [0014](0014-abertura-imersiva.md) | Abertura imersiva: tela cheia, som de papel e envelope mais lento | aceita |
+| [0015](0015-pagamento-mercado-pago-e-creem.md) | Pagamento: Mercado Pago no Brasil, Creem no exterior | aceita |
 
 ## Modelo
 

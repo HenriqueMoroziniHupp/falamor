@@ -63,7 +63,9 @@ O mínimo para alguém pagar, publicar e mandar o link.
 - [ ] Trocar o `useStorage('tts')` para o R2.
 
 **Pagamento**
-- [ ] Decidir o provedor. Recomendo **Pix primeiro** (Mercado Pago ou Stripe com Pix): é o que o público brasileiro usa por impulso.
+- [x] Decidir o provedor: **Mercado Pago (Pix)** no Brasil e **Creem** (Merchant of Record, em dólar) no exterior ([ADR 0015](docs/decisoes/0015-pagamento-mercado-pago-e-creem.md)).
+- [ ] Confirmar com a Creem (pessoa física do Brasil? saque por ACH para a conta global do Inter?) e com o Inter (conta pessoa física pode receber de plataforma de vendas?).
+- [ ] Interface `PaymentProvider` com as implementações Mercado Pago e Creem, escolhida pelo idioma.
 - [ ] Créditos: pacote pago → crédito → publicar consome 1 crédito (registro em `credits_ledger`).
 - [ ] Webhook de confirmação de pagamento, idempotente.
 
@@ -105,7 +107,7 @@ Aumentar o ticket e pegar as duas maiores datas.
 ## Fase 4 — Internacional (2º semestre/2027)
 
 - [ ] Espanhol (`es.json`, exemplos em `shared/samples.ts`, estilo de voz, `samples:generate`).
-- [ ] Preço por moeda e Stripe multi-moeda.
+- [ ] Preço por moeda (a Creem já cobra em dólar; avaliar outras moedas).
 - [ ] Datas locais: San Valentín, Día de la Madre (varia por país), aniversários.
 - [ ] Ocasiões o ano inteiro (aniversário de namoro, casamento, pedido) para depender menos de sazonalidade.
 
@@ -116,7 +118,6 @@ Aumentar o ticket e pegar as duas maiores datas.
 | Decisão | Opções | Quando decidir |
 | --- | --- | --- |
 | Preço | R$ 5 por 3 (prompt original) × R$ 9,90 por 1 × R$ 19,90 por 3 | Depois dos testes da Fase 0 |
-| Pagamento | Mercado Pago (Pix) × Stripe (Pix + cartão + internacional) | Início da Fase 1 |
 | Banco | D1 × Postgres (Neon) | Início da Fase 1 |
 | Duração padrão | 7 dias × mais tempo como upsell | Fase 1 |
 | Domínio e marca | falamor.com.br / .app | Fase 1 |
